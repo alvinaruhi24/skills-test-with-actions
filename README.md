@@ -18,7 +18,20 @@ _Create workflows that enable you to use Continuous Integration (CI) for your pr
   Start this step by acknowledging the previous step.
   Define terms and link to docs.github.com.
 -->
+build:
+  runs-on: ubuntu-latest
+  steps:
+    - uses: actions/checkout@v3
 
+    - name: Run markdown lint
+      run: |
+        npm install remark-cli remark-preset-lint-consistent
+        npx remark . --use remark-preset-lint-consistent --frail
+
+    - uses: actions/upload-artifact@v3
+      with:
+        name: remark-lint-report
+        path: public/
 ## Step 2: Fix the test
 
 _Great job adding the templated workflow! :tada:_
